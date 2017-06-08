@@ -5,13 +5,20 @@ var webpackConfig = {
   entry: path.resolve(__dirname, 'src', 'index.js'),
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'CNU Games',
-      template: 'src/index_facebook.html',
+      template: 'src/index_template.html',
       filename: 'index.html',
+      hash: true
+    }) /*,  
+    new HtmlWebpackPlugin({
+      title: 'CNU Games',
+      template: 'src/index_facebook.html',
+      filename: 'facebook.html',
       hash: true
     }),
     new HtmlWebpackPlugin({
@@ -34,16 +41,11 @@ var webpackConfig = {
     }),
     new HtmlWebpackPlugin({
       title: 'CNU Games',
-      template: 'src/index_login.html',
-      filename: 'login.html',
-      hash: true
-    }),
-    new HtmlWebpackPlugin({
-      title: 'CNU Games',
       template: 'src/index_main.html',
       filename: 'main.html',
       hash: true
     })
+    */
   ],
   module: {
     loaders: [

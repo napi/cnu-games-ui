@@ -1,39 +1,18 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import fetch from "isomorphic-fetch";
+import {render} from "react-dom";
+import {browserHistory} from "react-router";
+import {syncHistoryWithStore} from "react-router-redux";
+import RootContainer from "./containers/RootContainer";
+import configureStore from "./store/configureStore";
 
-class App extends React.Component {
+const store = configureStore()
+const history = syncHistoryWithStore(browserHistory, store)
 
-  constructor(props) {
-    super(props);
-  }
+let rootDiv = document.createElement("div");
+rootDiv.setAttribute("id", "root");
+document.body.appendChild(rootDiv);
 
-  componentDidMount() {
-    fetch('http://localhost:8000/example/helloUser')
-      .then(response => {
-        console.log(response);
-        console.log(response.body);
-        if (response.status >= 400) {
-          throw new Error('Bad response from server');
-        }
-        return response.json();
-      })
-      .then(json => {
-        console.log('----');
-        console.log(json)
-        console.log('----');
-      });
-  }
-
-  render() {
-    return (
-      <div>
-      </div>
-    )
-  }
-}
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+render(
+  <RootContainer store={store} history={history}/>,
+  rootDiv
 )

@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from "react";
+import React, {Component} from "react";
+import {PropTypes} from "prop-types";
 import {Provider} from "react-redux";
 import routes from "../routes";
 import {Router, applyRouterMiddleware} from "react-router";
@@ -13,13 +14,20 @@ export default class Root extends Component {
     super(props);
   }
 
+
+  componentDidMount() {
+  }
+
   render() {
-    const {store, history} = this.props
+    const {store, history} = this.props;
+    console.log(routes);
+
     return (
       <Provider store={store}>
         <Router history={history}
                 routes={routes}
-                render={applyRouterMiddleware()}/>
+                render={applyRouterMiddleware()}>
+        </Router>
       </Provider>
     )
   }
