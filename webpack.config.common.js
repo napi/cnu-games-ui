@@ -1,6 +1,7 @@
 var path = require('path');
 
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpackConfig = {
   entry: path.resolve(__dirname, 'src', 'index.js'),
   output: {
@@ -14,7 +15,14 @@ var webpackConfig = {
       template: 'src/index_template.html',
       filename: 'index.html',
       hash: true
-    }) /*,  
+    }),
+    new ExtractTextPlugin({
+      filename: 'style.css',
+      disable: false,
+      allChunks: true
+    })
+
+     /*,  
     new HtmlWebpackPlugin({
       title: 'CNU Games',
       template: 'src/index_facebook.html',
@@ -57,7 +65,19 @@ var webpackConfig = {
         query: {
           presets: ['es2015', 'stage-0', 'react']
         }
-      }
+      },
+      {
+        test: /\.s?css$/,
+        loader: ExtractTextPlugin.extract({
+          use: [{
+            loader: "css-loader"
+          }, {
+            loader: "sass-loader"
+          }],
+          fallback: "style-loader"
+        })
+      },
+
     ]
   },
   node: {

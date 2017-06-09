@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import {PropTypes} from "prop-types";
+import Login from "../containers/LoginContainer";
+
 
 export default class App extends Component {
   static propTypes = {
@@ -17,6 +19,7 @@ export default class App extends Component {
 
     return (
       <div id="app">
+        <Login />
         <div className="content-area">
           {this.props.children}
         </div>
