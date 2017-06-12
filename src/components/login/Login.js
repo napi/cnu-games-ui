@@ -44,7 +44,8 @@ export default class Login extends Component {
     return (
       <div>
         {!this.props.profile.name && <span>Need to login</span>}
-        {this.props.profile.name && <span>{this.props.profile.name}</span>}        
+        {this.props.profile.name && <span>{this.props.profile.name}</span>}
+        <br/><span>{window.localStorage.getItem("accessToken")}</span>
         <div className="fb-login-button" data-max-rows="1" data-size="small" data-show-faces="false" data-auto-logout-link="true"></div>
       </div>
     )
