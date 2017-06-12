@@ -23,7 +23,7 @@ export default class Login extends Component {
     }.bind(this);    
   }  
 
-  _statusChangeCallback(response) {;
+  _statusChangeCallback(response) {
     console.log(response);
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
@@ -41,11 +41,9 @@ export default class Login extends Component {
   }
 
   render() {
-    let auth = this.props.auth;
-
     return (
       <div>
-        {!this.props.profile.name && <span>Need to login</span>}        
+        {!this.props.profile.name && <span>Need to login</span>}
         {this.props.profile.name && <span>{this.props.profile.name}</span>}        
         <div className="fb-login-button" data-max-rows="1" data-size="small" data-show-faces="false" data-auto-logout-link="true"></div>
       </div>

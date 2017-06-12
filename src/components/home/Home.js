@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {PropTypes} from "prop-types";
-import Board from "../../containers/BoardContainer";
 
 export default class Home extends Component {
   static propTypes = {
@@ -15,7 +14,6 @@ export default class Home extends Component {
       <div id="home">
         {accessToken && <span>HOME</span>}
         {!accessToken && <span>You must login</span>}
-        <Board />
       </div>
     )
   }

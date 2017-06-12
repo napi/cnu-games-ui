@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/webpack --config=webpack.config.common.js",
-    "start": "./node_modules/.bin/webpack-dev-server --config=webpack.config.local.js --inline --content-base . --history-api-fallback"
+    "start": "./node_modules/.bin/webpack-dev-server --host local.robinkim.net --config=webpack.config.local.js --inline --content-base . --history-api-fallback",
+    "dev": "./node_modules/.bin/webpack --config=webpack.config.dev.js --inline --content-base . --history-api-fallback"
   },
   "author": "",
   "license": "ISC",

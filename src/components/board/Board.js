@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {PropTypes} from "prop-types";
+import {browserHistory} from "react-router";
 import "./board.scss";
 
 export default class Board extends Component {
@@ -12,7 +13,7 @@ export default class Board extends Component {
   componentDidMount() {
     let accessToken = window.localStorage.getItem("accessToken");
     this.props.getBoards(accessToken);
-  }  
+  }
 
   render() {
     let boards = this.props.boards;
@@ -22,7 +23,7 @@ export default class Board extends Component {
 
     return (
       <div id="boards">
-        <table width="80%" border="1" cellspacing="0" align="center">
+        <table width="80%">
           <colgroup>
             <col width="60px" />
             <col width="" />
@@ -47,9 +48,13 @@ export default class Board extends Component {
     )
   }
 
+  _onClickBoard(idx) {
+    browserHistory.push(`/board/${idx}`);
+  }
+
   _renderBoard(board) {
     return (
-      <tr key={board.idx}>
+      <tr key={board.idx} onClick={this._onClickBoard.bind(this, board.idx)}>
         <td>{board.idx}</td>
         <td>{board.title}</td>
         <td>{board.cnuUser.name}</td>

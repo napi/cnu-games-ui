@@ -1,19 +1,18 @@
 import {connect} from "react-redux";
-import Board from "../components/board/Board";
-import {fetchBoards} from "../actions/board";
+import BoardDetail from "../components/board/BoardDetail";
+import {fetchBoard} from "../actions/board";
 
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    boards: state.board.boards,
-    page: state.board.page
+    board: state.boardDetail,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getBoards:(accessToken) => {
-      fetchBoards(accessToken)(dispatch);
+    getBoard:(accessToken, idx) => {
+      fetchBoard(accessToken, idx)(dispatch);
     }    
   }
 }
@@ -21,4 +20,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Board);
+)(BoardDetail);

@@ -2,11 +2,15 @@ import React from "react";
 import {Route, IndexRoute} from "react-router";
 import AppContainer from "./containers/AppContainer";
 import HomeContainer from "./containers/HomeContainer";
-import LoginContainer from "./containers/LoginContainer";
+import BoardContainer from "./containers/BoardContainer";
+import BoardDetailContainer from "./containers/BoardDetailContainer";
 
 export default (
   <Route path="/" component={AppContainer}>
     <IndexRoute component={HomeContainer}/>
-    <Route path="login" component={LoginContainer} />
+    <Route path="board">
+      <IndexRoute component={BoardContainer}/>
+      <Route path=":idx" component={BoardDetailContainer}/>
+    </Route>
   </Route>
 )
