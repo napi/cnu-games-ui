@@ -1,13 +1,32 @@
 import React, {Component} from "react";
 import {PropTypes} from "prop-types";
 import {browserHistory} from "react-router";
+import ReactModal from 'react-modal';
+import BoardWriteContainer from "../../containers/BoardWriteContainer";
 import "./board.scss";
 
 export default class Board extends Component {
   static propTypes = {
     boards: PropTypes.array.isRequired,
     page: PropTypes.number.isRequired,
-    getBoards:PropTypes.func.isRequired
+    getBoards:PropTypes.func.isRequired,
+    showModal:PropTypes.bool.isRequired,
+    openModal:PropTypes.func.isRequired,
+    closeModal:PropTypes.func.isRequired
+  }
+
+  constructor(props) {
+    super(props);
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+  }
+  
+  handleOpenModal () {
+    this.props.openModal();
+  }
+  
+  handleCloseModal () {
+    this.props.closeModal();
   }
 
   componentDidMount() {
@@ -44,6 +63,17 @@ export default class Board extends Component {
             {boards.map(board => this._renderBoard(board))}
           </tbody>
         </table>
+        <div>
+          <button onClick={this.handleOpenModal}>글쓰기</button>
+          <ReactModal 
+             isOpen={this.props.showModal}
+             contentLabel="onRequestClose Example"
+             onRequestClose={this.handleTest}
+          >
+            <BoardWriteContainer />
+            <button onClick={this.handleCloseModal}>창닫기</button>
+          </ReactModal>
+        </div>
       </div>
     )
   }

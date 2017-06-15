@@ -4,6 +4,7 @@ import AppContainer from "./containers/AppContainer";
 import HomeContainer from "./containers/HomeContainer";
 import BoardContainer from "./containers/BoardContainer";
 import BoardDetailContainer from "./containers/BoardDetailContainer";
+import BoardWriteContainer from "./containers/BoardWriteContainer";
 
 export default (
   <Route path="/" component={AppContainer}>

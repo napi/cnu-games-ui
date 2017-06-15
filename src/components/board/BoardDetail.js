@@ -5,7 +5,8 @@ import "./board.scss";
 export default class Board extends Component {
   static propTypes = {
     params: PropTypes.object.isRequired,
-    board: PropTypes.object.isRequired
+    board: PropTypes.object.isRequired,
+    getBoard: PropTypes.func.isRequired
   }
 
   componentDidMount() {

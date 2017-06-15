@@ -3,7 +3,6 @@ import BoardDetail from "../components/board/BoardDetail";
 import {fetchBoard} from "../actions/board";
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     board: state.boardDetail,
   }

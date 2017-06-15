@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/webpack --config=webpack.config.common.js",
-    "start": "./node_modules/.bin/webpack-dev-server --host local.robinkim.net --config=webpack.config.local.js --inline --content-base . --history-api-fallback",
-    "dev": "./node_modules/.bin/webpack --config=webpack.config.dev.js --inline --content-base . --history-api-fallback"
+    "start": "./node_modules/.bin/webpack-dev-server --config=webpack.config.local.js --host local.robinkim.net --inline --content-base . --history-api-fallback"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +19,7 @@
     "node-sass": "^4.5.3",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-modal": "^1.9.6",
     "react-redux": "^5.0.4",
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.8",
