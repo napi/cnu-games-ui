@@ -65,15 +65,15 @@ export default class Board extends Component {
         </table>
         <div>
           <button onClick={this.handleOpenModal}>글쓰기</button>
-          <ReactModal 
-             isOpen={this.props.showModal}
-             contentLabel="onRequestClose Example"
-             onRequestClose={this.handleTest}
-          >
-            <BoardWriteContainer />
-            <button onClick={this.handleCloseModal}>창닫기</button>
-          </ReactModal>
         </div>
+        <ReactModal 
+           isOpen={this.props.showModal}
+           contentLabel="onRequestClose Example"
+           onRequestClose={this.handleCloseModal}
+        >
+          <BoardWriteContainer title="" contents="" />
+          <button onClick={this.handleCloseModal}>창닫기</button>
+        </ReactModal>        
       </div>
     )
   }

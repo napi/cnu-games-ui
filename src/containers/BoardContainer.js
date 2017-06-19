@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
   return {
     boards: state.board.boards,
     page: state.board.page,
-    showModal: state.board.showModal
+    showModal: state.board.showModal,
+    profile: state.login.profile
   }
 }
 

@@ -10,6 +10,9 @@ export const RECEIVE_BOARDS = 'RECEIVE_BOARDS';
 export const REQUEST_BOARD = 'REQUEST_BOARD';
 export const RECEIVE_BOARD = 'RECEIVE_BOARD';
 
+export const REQUEST_DELETE = 'REQUEST_DELETE';
+export const RECEIVE_DELETE = 'RECEIVE_DELETE';
+
 export const OPEN_MODAL = 'OPEN_MODAL';
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 /*
@@ -86,22 +89,68 @@ export function fetchBoard(accessToken, idx) {
   }
 }
 
-export function writeBoard(accessToken, title, contents) {
-  return (dispatch) => {
-    let uri = `${API_BASE_URL}/api/board`;
-    return fetch(uri, {
-        method: "POST",
-        headers: {
-          "token": accessToken,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "title": title,
-          "contents": contents
+export function writeBoard(accessToken, title, contents, idx) {
+  if (idx) {
+    // Update
+    return (dispatch) => {
+      let uri = `${API_BASE_URL}/api/board/${idx}`;
+      return fetch(uri, {
+          method: "PUT",
+          headers: {
+            "token": accessToken,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "title": title,
+            "contents": contents
+          })
         })
+        .then(response => {
+          alert('수정되었습니다.');
+          window.location.reload();
+        })
+        .catch(error => console.log(error));
+    }
+  } else {
+    // Insert
+    return (dispatch) => {
+      console.log("wwwrite");
+      let uri = `${API_BASE_URL}/api/board`;
+      return fetch(uri, {
+          method: "POST",
+          headers: {
+            "token": accessToken,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            "title": title,
+            "contents": contents
+          })
+        })
+        // .then(response => dispatch(closeBoardModal()))
+        .then(response => {
+          alert('등록되었습니다.');
+          dispatch(fetchBoards(accessToken))
+        })
+        .catch(error => console.log(error));
+    }
+  }
+}
+
+export function deleteBoard(accessToken, idx) {
+  return (dispatch) => {
+    let uri = `${API_BASE_URL}/api/board/${idx}`;
+    return fetch(uri, {
+        method: "DELETE",
+        headers: {
+          "token": accessToken
+        }
       })
       // .then(response => dispatch(closeBoardModal()))
-      .then(response => dispatch(fetchBoards(accessToken)))
+      .then(response => {
+        alert('삭제되었습니다.');
+        dispatch(fetchBoards(accessToken))
+      })
       .catch(error => console.log(error));
   }
 }

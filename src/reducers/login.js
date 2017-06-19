@@ -4,7 +4,6 @@ export default function login(state = {
   profile: {},
   auth: {}
 }, action) {
-  console.log(action);
   switch(action.type) {
   case RECEIVE_PROFILE : {
     let nextState = Object.assign({}, state);
