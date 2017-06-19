@@ -13,13 +13,15 @@ export default class Board extends Component {
     profile: PropTypes.object.isRequired,
     showModal:PropTypes.bool.isRequired,
     openModal:PropTypes.func.isRequired,
-    closeModal:PropTypes.func.isRequired
+    closeModal:PropTypes.func.isRequired,
+    deleteBoard:PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +39,13 @@ export default class Board extends Component {
   
   handleCloseModal () {
     this.props.closeModal();
+  }
+
+  handleDelete(idx) {
+    if (confirm('정말로 삭제하시겠습니까?')) {
+      let accessToken = window.localStorage.getItem("accessToken");
+      this.props.deleteBoard(accessToken, idx);
+    }    
   }
 
   render() {
@@ -58,7 +67,8 @@ export default class Board extends Component {
           <p>{board.contents}</p>
         </div>
         <div className="board-footer">
-          {this.props.profile.idx == board.cnuUser.idx && <button onClick={this.handleOpenModal.bind(this, board.idx)}>수정하기</button>}
+          {this.props.profile.idx == board.cnuUser.idx && <button onClick={this.handleOpenModal.bind(this)}>수정하기</button>}
+          {this.props.profile.idx == board.cnuUser.idx && <button onClick={this.handleDelete.bind(this, board.idx)}>삭제하기</button>}
           <button onClick={this._onClickList.bind(this)}>목록으로</button>
         </div>
 

@@ -114,7 +114,6 @@ export function writeBoard(accessToken, title, contents, idx) {
   } else {
     // Insert
     return (dispatch) => {
-      console.log("wwwrite");
       let uri = `${API_BASE_URL}/api/board`;
       return fetch(uri, {
           method: "POST",
@@ -149,7 +148,7 @@ export function deleteBoard(accessToken, idx) {
       // .then(response => dispatch(closeBoardModal()))
       .then(response => {
         alert('삭제되었습니다.');
-        dispatch(fetchBoards(accessToken))
+        browserHistory.push(`/board`);
       })
       .catch(error => console.log(error));
   }
