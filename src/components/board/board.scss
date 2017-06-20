@@ -18,3 +18,22 @@
     border: 1px solid black;
   }      
 }
+
+#board {
+  .board-header {
+    position: relative;
+    border-top: 1px solid #ccc;
+    background: #f6f6f6;
+    overflow: hidden;  
+  }
+
+  .board-body {
+    border-top: 1px solid #ccc;
+    padding: 15px;
+    background: #fff;
+  }
+
+  .board-footer {
+
+  }
+}

@@ -1,9 +1,19 @@
 import React, {Component} from "react";
-import ReactModal from 'react-modal';
 import BoardWriteContainer from '../../containers/BoardWriteContainer';
 import {browserHistory} from "react-router";
 import {PropTypes} from "prop-types";
 import "./board.scss";
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)'
+  }
+};
 
 export default class Board extends Component {
   static propTypes = {
@@ -11,16 +21,14 @@ export default class Board extends Component {
     board: PropTypes.object.isRequired,
     getBoard: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired,
-    showModal:PropTypes.bool.isRequired,
-    openModal:PropTypes.func.isRequired,
-    closeModal:PropTypes.func.isRequired,
+    openModal:PropTypes.func.isRequired,    
     deleteBoard:PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
+
     this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
@@ -35,10 +43,6 @@ export default class Board extends Component {
 
   handleOpenModal () {
     this.props.openModal();
-  }
-  
-  handleCloseModal () {
-    this.props.closeModal();
   }
 
   handleDelete(idx) {
@@ -72,14 +76,7 @@ export default class Board extends Component {
           <button onClick={this._onClickList.bind(this)}>목록으로</button>
         </div>
 
-        <ReactModal 
-           isOpen={this.props.showModal}
-           contentLabel="onRequestClose Example"
-           onRequestClose={this.handleCloseModal}
-        >
-          <BoardWriteContainer title={board.title} contents={board.contents} idx={board.idx} />
-          <button onClick={this.handleCloseModal}>창닫기</button>
-        </ReactModal>        
+        <BoardWriteContainer title={board.title} contents={board.contents} idx={board.idx} />
       </div>
     )
   }

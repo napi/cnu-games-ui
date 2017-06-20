@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {PropTypes} from "prop-types";
 import {browserHistory} from "react-router";
-import ReactModal from 'react-modal';
 import BoardWriteContainer from "../../containers/BoardWriteContainer";
 import "./board.scss";
 
@@ -9,26 +8,19 @@ export default class Board extends Component {
   static propTypes = {
     boards: PropTypes.array.isRequired,
     page: PropTypes.number.isRequired,
-    getBoards:PropTypes.func.isRequired,
-    showModal:PropTypes.bool.isRequired,
-    openModal:PropTypes.func.isRequired,
-    closeModal:PropTypes.func.isRequired
+    openModal:PropTypes.func.isRequired,    
+    getBoards:PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
-    this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleOpenModal = this.handleOpenModal.bind(this);    
   }
-  
+
   handleOpenModal () {
     this.props.openModal();
   }
   
-  handleCloseModal () {
-    this.props.closeModal();
-  }
-
   componentDidMount() {
     let accessToken = window.localStorage.getItem("accessToken");
     this.props.getBoards(accessToken);
@@ -66,14 +58,7 @@ export default class Board extends Component {
         <div>
           <button onClick={this.handleOpenModal}>글쓰기</button>
         </div>
-        <ReactModal 
-           isOpen={this.props.showModal}
-           contentLabel="onRequestClose Example"
-           onRequestClose={this.handleCloseModal}
-        >
-          <BoardWriteContainer title="" contents="" />
-          <button onClick={this.handleCloseModal}>창닫기</button>
-        </ReactModal>        
+        <BoardWriteContainer title="" contents="" />
       </div>
     )
   }

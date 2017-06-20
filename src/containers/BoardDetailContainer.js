@@ -1,11 +1,10 @@
 import {connect} from "react-redux";
 import BoardDetail from "../components/board/BoardDetail";
-import {fetchBoard, openModal, closeModal, deleteBoard} from "../actions/board";
+import {fetchBoard, openModal, deleteBoard} from "../actions/board";
 
 const mapStateToProps = (state) => {
   return {
     board: state.boardDetail,
-    showModal: state.board.showModal,    
     profile: state.login.profile
   }
 }
@@ -17,10 +16,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     openModal:() => {
       dispatch(openModal());
-    },
-    closeModal:() => {
-      dispatch(closeModal());
-    },
+    },    
     deleteBoard:(accessToken, idx) => {
       deleteBoard(accessToken, idx)(dispatch);
     }            
