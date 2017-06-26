@@ -82,7 +82,7 @@ export default class Board extends Component {
             <button onClick={this._onClickList.bind(this)}>목록으로</button>
           </div>
         </article>
-        <CommentContainer />
+        <CommentContainer boardIdx={board.idx} />
 
         <BoardWriteContainer title={board.title} contents={board.contents} idx={board.idx} />
       </div>

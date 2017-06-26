@@ -10,8 +10,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setBoard:(accessToken, comment, idx) => {
-      writeComment(accessToken, comment, idx)(dispatch);
+    setComment:(accessToken, boardIdx, parentIdx, comment) => {
+      writeComment(accessToken, comment, boardIdx, parentIdx)(dispatch);
     },
     closeModal:() => {
       dispatch(closeModal());
@@ -22,4 +22,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(BoardWrite);
+)(CommentWrite);

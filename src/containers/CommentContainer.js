@@ -1,9 +1,8 @@
 import {connect} from "react-redux";
 import Comment from "../components/comment/Comment";
-import {fetchComments} from "../actions/comment";
+import {fetchComments, openModal} from "../actions/comment";
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     comments: state.comment.comments,
     profile: state.login.profile
@@ -12,9 +11,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getComments:(accessToken) => {
-      fetchComments(accessToken)(dispatch);
-    }
+    getComments:(accessToken, boardIdx) => {
+      fetchComments(accessToken, boardIdx)(dispatch);
+    },
+    openModal:(parentIdx) => {
+      dispatch(openModal(parentIdx));
+    }            
   }
 }
 

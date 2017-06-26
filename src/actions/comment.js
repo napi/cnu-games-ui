@@ -10,8 +10,8 @@ export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 export const REQUEST_DELETE = 'REQUEST_DELETE';
 export const RECEIVE_DELETE = 'RECEIVE_DELETE';
 
-export const OPEN_MODAL = 'OPEN_MODAL';
-export const CLOSE_MODAL = 'CLOSE_MODAL';
+export const OPEN_COMMENT_MODAL = 'OPEN_COMMENT_MODAL';
+export const CLOSE_COMMENT_MODAL = 'CLOSE_COMMENT_MODAL';
 /*
  * action creators
  */
@@ -29,22 +29,23 @@ export function receiveComments(json) {
   };
 }
 
-export function openModal() {
+export function openModal(parentIdx) {
   return {
-    type: OPEN_MODAL
+    type: OPEN_COMMENT_MODAL,
+    data: parentIdx
   };
 }
 
 export function closeModal() {
   return {
-    type: CLOSE_MODAL
+    type: CLOSE_COMMENT_MODAL
   };
 }
 
-export function fetchComments(accessToken) {
+export function fetchComments(accessToken, boardIdx) {
   return (dispatch) => {
     dispatch(requestComments(accessToken));
-    let uri = `${API_BASE_URL}/api/comment`;
+    let uri = `${API_BASE_URL}/api/comment/board/${boardIdx}`;
     return fetch(uri, {
         method: "GET",
         headers: {
@@ -57,28 +58,28 @@ export function fetchComments(accessToken) {
   }
 }
 
-export function writeComment(accessToken, comment, idx) {
-  if (idx) {
-    // Update
-    return (dispatch) => {
-      let uri = `${API_BASE_URL}/api/comment/${idx}`;
-      return fetch(uri, {
-          method: "PUT",
-          headers: {
-            "token": accessToken,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            "comment": comment
-          })
-        })
-        .then(response => {
-          alert('수정되었습니다.');
-          window.location.reload();
-        })
-        .catch(error => console.log(error));
-    }
-  } else {
+export function writeComment(accessToken, comment, boardIdx, parentIdx) {
+  // if (idx) {
+  //   // Update
+  //   return (dispatch) => {
+  //     let uri = `${API_BASE_URL}/api/comment/${idx}`;
+  //     return fetch(uri, {
+  //         method: "PUT",
+  //         headers: {
+  //           "token": accessToken,
+  //           'Content-Type': 'application/json'
+  //         },
+  //         body: JSON.stringify({
+  //           "comment": comment
+  //         })
+  //       })
+  //       .then(response => {
+  //         alert('수정되었습니다.');
+  //         window.location.reload();
+  //       })
+  //       .catch(error => console.log(error));
+  //   }
+  // } else {
     // Insert
     return (dispatch) => {
       let uri = `${API_BASE_URL}/api/comment`;
@@ -89,17 +90,20 @@ export function writeComment(accessToken, comment, idx) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
+            "boardIdx": boardIdx,
+            "parentIdx": parentIdx,
             "comment": comment
+            
           })
         })
         .then(response => {
           alert('등록되었습니다.');
-          dispatch(closeCommentModal());
-          dispatch(fetchComments(accessToken));
+          dispatch(closeModal());
+          dispatch(fetchComments(accessToken, boardIdx));
         })
         .catch(error => console.log(error));
     }
-  }
+  // }
 }
 
 export function deleteComment(accessToken, idx) {
@@ -113,8 +117,8 @@ export function deleteComment(accessToken, idx) {
       })
       .then(response => {
         alert('삭제되었습니다.');
-        dispatch(closeCommentModal());
-        dispatch(fetchComments(accessToken));
+        dispatch(closeModal());
+        dispatch(fetchComments(accessToken, boardIdx));
       })
       .catch(error => console.log(error));
   }

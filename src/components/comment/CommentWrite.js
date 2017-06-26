@@ -16,7 +16,8 @@ const customStyles = {
 
 export default class CommentWrite extends Component {
   static propTypes = {
-    comment: PropTypes.string.isRequired,
+    boardIdx: PropTypes.number.isRequired,
+    parentIdx: PropTypes.number.isRequired,
     setComment: PropTypes.func.isRequired,
     showModal:PropTypes.bool.isRequired,
     closeModal:PropTypes.func.isRequired    
@@ -24,18 +25,11 @@ export default class CommentWrite extends Component {
 
   constructor(props) {
     super(props);
-    this.handleCloseModal = this.handleCloseModal.bind(this);    
+    this.handleCloseModal = this.handleCloseModal.bind(this);
     this.state = {
       comment: ''
     };
   }
-
-  componentDidMount() {
-    let obj = {
-      comment: this.props.comment,
-    };
-    this.setState(obj);
-  }  
   
   handleCloseModal () {
     this.props.closeModal();
@@ -49,7 +43,8 @@ export default class CommentWrite extends Component {
 
   _onSubmitBoard(event) {
     let accessToken = window.localStorage.getItem("accessToken");        
-    this.props.setComment(accessToken, this.state.title, this.state.contents, this.props.idx);
+    this.props.setComment(accessToken, this.props.boardIdx, this.props.parentIdx, this.state.comment);
+    this.setState({'comment': ''})
     event.preventDefault();
   }
 
@@ -72,7 +67,7 @@ export default class CommentWrite extends Component {
            onRequestClose={this.handleCloseModal}
            style={customStyles}
         >
-          <h3>게시판 글쓰기</h3>
+          <h3>게시판 덧글쓰기</h3>
           <form action="#" onSubmit={this._onSubmitBoard.bind(this)}>
             <div>
               <textarea name="comment" onChange={this.handleChange.bind(this)} value={this.state.comment} style={style}/>

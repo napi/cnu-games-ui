@@ -1,24 +1,25 @@
-import {RECEIVE_COMMENTS, OPEN_MODAL, CLOSE_MODAL} from "../actions/comment";
+import {RECEIVE_COMMENTS, OPEN_COMMENT_MODAL, CLOSE_COMMENT_MODAL} from "../actions/comment";
 
 export default function login(state = {
   comments: [],
-  page: 1,
   showModal: false
 }, action) {
   switch(action.type) {
   case RECEIVE_COMMENTS : {
     let nextState = Object.assign({}, state);
 
-    nextState.comments = action.comments;
+    nextState.showModal = false;
+    nextState.comments = action.data;
     return nextState;
   }
-  case OPEN_MODAL : {
+  case OPEN_COMMENT_MODAL : {
     let nextState = Object.assign({}, state);
 
     nextState.showModal = true;
+    nextState.parentIdx = action.data;
     return nextState;
   }
-  case CLOSE_MODAL : {
+  case CLOSE_COMMENT_MODAL : {
     let nextState = Object.assign({}, state);
 
     nextState.showModal = false;
