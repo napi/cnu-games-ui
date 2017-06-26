@@ -39,7 +39,7 @@ export default class Comment extends Component {
         <div>
           <button onClick={this.handleOpenModal.bind(this, 0)}>덧쓰기</button>
         </div>                
-        <CommentWriteContainer boardIdx={this.props.boardIdx} parentIdx={0} />
+        <CommentWriteContainer boardIdx={this.props.boardIdx}/>
         <div>
           <button onClick={this.handleOpenModal.bind(this, 0)}>덧쓰기</button>
         </div>        

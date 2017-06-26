@@ -4,14 +4,15 @@ import {writeComment, closeModal} from "../actions/comment";
 
 const mapStateToProps = (state) => {
   return {
-    showModal: state.comment.showModal    
+    showModal: state.comment.showModal,
+    parentIdx: state.comment.parentIdx    
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setComment:(accessToken, boardIdx, parentIdx, comment) => {
-      writeComment(accessToken, comment, boardIdx, parentIdx)(dispatch);
+      writeComment(accessToken, boardIdx, parentIdx, comment)(dispatch);
     },
     closeModal:() => {
       dispatch(closeModal());

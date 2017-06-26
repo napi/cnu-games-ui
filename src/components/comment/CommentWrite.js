@@ -42,7 +42,7 @@ export default class CommentWrite extends Component {
   }
 
   _onSubmitBoard(event) {
-    let accessToken = window.localStorage.getItem("accessToken");        
+    let accessToken = window.localStorage.getItem("accessToken");
     this.props.setComment(accessToken, this.props.boardIdx, this.props.parentIdx, this.state.comment);
     this.setState({'comment': ''})
     event.preventDefault();
@@ -58,8 +58,8 @@ export default class CommentWrite extends Component {
       padding:'9px',
       boxSizing:'border-box',
       fontSize:'15px'
-    };    
-    return (
+    };
+    return (      
       <div id="boardWrite">
         <ReactModal 
            isOpen={this.props.showModal}

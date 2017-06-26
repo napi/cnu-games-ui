@@ -2,6 +2,7 @@ import {RECEIVE_COMMENTS, OPEN_COMMENT_MODAL, CLOSE_COMMENT_MODAL} from "../acti
 
 export default function login(state = {
   comments: [],
+  parentIdx: 0,
   showModal: false
 }, action) {
   switch(action.type) {

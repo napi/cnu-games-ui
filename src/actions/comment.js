@@ -58,7 +58,7 @@ export function fetchComments(accessToken, boardIdx) {
   }
 }
 
-export function writeComment(accessToken, comment, boardIdx, parentIdx) {
+export function writeComment(accessToken, boardIdx, parentIdx, comment) {
   // if (idx) {
   //   // Update
   //   return (dispatch) => {
