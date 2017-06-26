@@ -4,11 +4,8 @@ import {browserHistory} from "react-router";
 /*
  * action types
  */
-export const REQUEST_BOARDS = 'REQUEST_BOARDS';
-export const RECEIVE_BOARDS = 'RECEIVE_BOARDS';
-
-export const REQUEST_BOARD = 'REQUEST_BOARD';
-export const RECEIVE_BOARD = 'RECEIVE_BOARD';
+export const REQUEST_COMMENTS = 'REQUEST_COMMENTS';
+export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 
 export const REQUEST_DELETE = 'REQUEST_DELETE';
 export const RECEIVE_DELETE = 'RECEIVE_DELETE';
@@ -19,28 +16,15 @@ export const CLOSE_MODAL = 'CLOSE_MODAL';
  * action creators
  */
 
-export function requestBoards(accessToken) {
+export function requestComments(accessToken) {
   return {
-    type: REQUEST_BOARDS
+    type: REQUEST_COMMENTS
   };
 }
 
-export function receiveBoards(json) {
+export function receiveComments(json) {
   return {
-    type: RECEIVE_BOARDS,
-    data: json
-  };
-}
-
-export function requestBoard(accessToken) {
-  return {
-    type: REQUEST_BOARD
-  };
-}
-
-export function receiveBoard(json) {
-  return {
-    type: RECEIVE_BOARD,
+    type: RECEIVE_COMMENTS,
     data: json
   };
 }
@@ -57,10 +41,10 @@ export function closeModal() {
   };
 }
 
-export function fetchBoards(accessToken, page) {
+export function fetchComments(accessToken) {
   return (dispatch) => {
-    dispatch(requestBoards(accessToken));
-    let uri = `${API_BASE_URL}/api/board?page=${page}`;
+    dispatch(requestComments(accessToken));
+    let uri = `${API_BASE_URL}/api/comment`;
     return fetch(uri, {
         method: "GET",
         headers: {
@@ -68,32 +52,16 @@ export function fetchBoards(accessToken, page) {
         }
       })
       .then(response => response.json())
-      .then(json => dispatch(receiveBoards(json)))
+      .then(json => dispatch(receiveComments(json)))
       .catch(error => console.log(error));
   }
 }
 
-export function fetchBoard(accessToken, idx) {
-  return (dispatch) => {
-    dispatch(requestBoard(accessToken));
-    let uri = `${API_BASE_URL}/api/board/${idx}`;
-    return fetch(uri, {
-        method: "GET",
-        headers: {
-          "token": accessToken
-        }
-      })
-      .then(response => response.json())
-      .then(json => dispatch(receiveBoard(json)))
-      .catch(error => console.log(error));
-  }
-}
-
-export function writeBoard(accessToken, title, contents, idx) {
+export function writeComment(accessToken, comment, idx) {
   if (idx) {
     // Update
     return (dispatch) => {
-      let uri = `${API_BASE_URL}/api/board/${idx}`;
+      let uri = `${API_BASE_URL}/api/comment/${idx}`;
       return fetch(uri, {
           method: "PUT",
           headers: {
@@ -101,8 +69,7 @@ export function writeBoard(accessToken, title, contents, idx) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            "title": title,
-            "contents": contents
+            "comment": comment
           })
         })
         .then(response => {
@@ -114,7 +81,7 @@ export function writeBoard(accessToken, title, contents, idx) {
   } else {
     // Insert
     return (dispatch) => {
-      let uri = `${API_BASE_URL}/api/board`;
+      let uri = `${API_BASE_URL}/api/comment`;
       return fetch(uri, {
           method: "POST",
           headers: {
@@ -122,33 +89,32 @@ export function writeBoard(accessToken, title, contents, idx) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            "title": title,
-            "contents": contents
+            "comment": comment
           })
         })
-        // .then(response => dispatch(closeBoardModal()))
         .then(response => {
           alert('등록되었습니다.');
-          dispatch(fetchBoards(accessToken))
+          dispatch(closeCommentModal());
+          dispatch(fetchComments(accessToken));
         })
         .catch(error => console.log(error));
     }
   }
 }
 
-export function deleteBoard(accessToken, idx) {
+export function deleteComment(accessToken, idx) {
   return (dispatch) => {
-    let uri = `${API_BASE_URL}/api/board/${idx}`;
+    let uri = `${API_BASE_URL}/api/comment/${idx}`;
     return fetch(uri, {
         method: "DELETE",
         headers: {
           "token": accessToken
         }
       })
-      // .then(response => dispatch(closeBoardModal()))
       .then(response => {
         alert('삭제되었습니다.');
-        browserHistory.push(`/board`);
+        dispatch(closeCommentModal());
+        dispatch(fetchComments(accessToken));
       })
       .catch(error => console.log(error));
   }

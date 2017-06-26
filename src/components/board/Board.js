@@ -6,10 +6,9 @@ import "./board.scss";
 
 export default class Board extends Component {
   static propTypes = {
-    boards: PropTypes.array.isRequired,
-    page: PropTypes.number.isRequired,
+    boards: PropTypes.object.isRequired,
     openModal:PropTypes.func.isRequired,    
-    getBoards:PropTypes.func.isRequired
+    getBoards:PropTypes.func.isRequired    
   }
 
   constructor(props) {
@@ -23,10 +22,14 @@ export default class Board extends Component {
   
   componentDidMount() {
     let accessToken = window.localStorage.getItem("accessToken");
-    this.props.getBoards(accessToken);
+    let page = 1;
+    if (this.props.location.query.page) {
+      page = this.props.location.query.page;
+    }             
+    this.props.getBoards(accessToken, page);
   }
 
-  render() {
+  render() {    
     let boards = this.props.boards;
     if (!boards) {
       return null;
@@ -52,9 +55,12 @@ export default class Board extends Component {
             </tr>
           </thead>
           <tbody>
-            {boards.map(board => this._renderBoard(board))}
-          </tbody>
+            {boards.content && boards.content.map(board => this._renderBoard(board))}
+          </tbody>            
         </table>
+        <div>
+          {this._renderPaging(boards)}
+        </div>
         <div>
           <button onClick={this.handleOpenModal}>글쓰기</button>
         </div>
@@ -67,6 +73,12 @@ export default class Board extends Component {
     browserHistory.push(`/board/${idx}`);
   }
 
+  _onClickPage(page) {
+    browserHistory.push(`/board?page=${page}`);
+    let accessToken = window.localStorage.getItem("accessToken");
+    this.props.getBoards(accessToken, page);
+  }
+
   _renderBoard(board) {
     return (
       <tr key={board.idx} onClick={this._onClickBoard.bind(this, board.idx)}>
@@ -77,4 +89,29 @@ export default class Board extends Component {
         <td></td>
       </tr>
     )
-  }}
+  }
+
+  _renderPaging(board) {
+    var pageSize = 5;
+    var startIdx = (Math.floor(board.number / pageSize) * pageSize) + 1;
+    var lastIdx = (Math.floor(board.number / pageSize) * pageSize) + pageSize;
+    lastIdx = lastIdx < board.totalPages ? lastIdx : board.totalPages;
+
+    var pages = [];
+    if (startIdx != 1) {
+      pages.push(<span key="first" onClick={this._onClickPage.bind(this, 1)}>&#60;&#60;</span>);
+    }
+    for (var i = startIdx ; i <= lastIdx ; i++) {
+      pages.push(<span key={i} onClick={this._onClickPage.bind(this, i)}>{i}</span>);
+    }
+    if (lastIdx != board.totalPages) {
+      pages.push(<span key="last" onClick={this._onClickPage.bind(this, board.totalPages)}>&#62;&#62;</span>); 
+    }
+
+    return (
+      <div>
+        {pages}
+      </div>
+    );
+  }
+}

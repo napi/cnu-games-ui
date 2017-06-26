@@ -1,15 +1,15 @@
-import {CHANGE_PAGE, RECEIVE_BOARDS, OPEN_MODAL, CLOSE_MODAL} from "../actions/board";
+import {RECEIVE_COMMENTS, OPEN_MODAL, CLOSE_MODAL} from "../actions/comment";
 
 export default function login(state = {
-  boards: {},
+  comments: [],
+  page: 1,
   showModal: false
 }, action) {
   switch(action.type) {
-  case RECEIVE_BOARDS : {
+  case RECEIVE_COMMENTS : {
     let nextState = Object.assign({}, state);
 
-    nextState.boards = action.data;
-    nextState.showModal = false;
+    nextState.comments = action.comments;
     return nextState;
   }
   case OPEN_MODAL : {

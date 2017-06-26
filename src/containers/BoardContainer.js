@@ -1,20 +1,18 @@
 import {connect} from "react-redux";
 import Board from "../components/board/Board";
-import {fetchBoards, openModal} from "../actions/board";
+import {fetchBoards, openModal, changePage} from "../actions/board";
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     boards: state.board.boards,
-    page: state.board.page,
     profile: state.login.profile
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getBoards:(accessToken) => {
-      fetchBoards(accessToken)(dispatch);
+    getBoards:(accessToken, page) => {
+      fetchBoards(accessToken, page)(dispatch);
     },
     openModal:() => {
       dispatch(openModal());

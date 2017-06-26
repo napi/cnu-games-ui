@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import BoardWriteContainer from '../../containers/BoardWriteContainer';
+import CommentContainer from '../../containers/CommentContainer';
 import {browserHistory} from "react-router";
 import {PropTypes} from "prop-types";
 import "./board.scss";
@@ -58,23 +59,30 @@ export default class Board extends Component {
       return null;
     }
 
+    const style = {
+
+    }
     return (
       <div id="board">
-        <div className="board-header">
-          <h3>
-            <span>제목 : {board.title}</span><br/>
-            <span>작성자 : {board.cnuUser.name}</span>
-          </h3>
-        </div>
-        <div className="board-body">
-          <h3>본문</h3>
-          <p>{board.contents}</p>
-        </div>
-        <div className="board-footer">
-          {this.props.profile.idx == board.cnuUser.idx && <button onClick={this.handleOpenModal.bind(this)}>수정하기</button>}
-          {this.props.profile.idx == board.cnuUser.idx && <button onClick={this.handleDelete.bind(this, board.idx)}>삭제하기</button>}
-          <button onClick={this._onClickList.bind(this)}>목록으로</button>
-        </div>
+        <article>
+          <div className="board-header">
+            <h3>
+              <span>제목 : {board.title}</span><br/>
+            </h3>
+              <span>작성자 : {board.cnuUser.name}</span>
+            
+          </div>
+          <div className="board-body">
+            <h3>본문</h3>
+            <p>{board.contents}</p>
+          </div>
+          <div className="board-footer">
+            {this.props.profile.idx == board.cnuUser.idx && <button onClick={this.handleOpenModal.bind(this)}>수정하기</button>}
+            {this.props.profile.idx == board.cnuUser.idx && <button onClick={this.handleDelete.bind(this, board.idx)}>삭제하기</button>}
+            <button onClick={this._onClickList.bind(this)}>목록으로</button>
+          </div>
+        </article>
+        <CommentContainer />
 
         <BoardWriteContainer title={board.title} contents={board.contents} idx={board.idx} />
       </div>
