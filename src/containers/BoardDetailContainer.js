@@ -5,20 +5,21 @@ import {fetchBoard, openModal, deleteBoard} from "../actions/board";
 const mapStateToProps = (state) => {
   return {
     board: state.boardDetail,
-    profile: state.login.profile
+    profile: state.login.profile,
+    isLogin: state.login.isLogin
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getBoard:(accessToken, idx) => {
-      fetchBoard(accessToken, idx)(dispatch);
+    getBoard:(idx) => {
+      dispatch(fetchBoard(idx));
     },
     openModal:() => {
       dispatch(openModal());
     },    
-    deleteBoard:(accessToken, idx) => {
-      deleteBoard(accessToken, idx)(dispatch);
+    deleteBoard:(idx) => {
+      dispatch(deleteBoard(idx));
     }            
   }
 }

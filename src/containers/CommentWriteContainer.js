@@ -11,8 +11,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setComment:(accessToken, boardIdx, parentIdx, comment) => {
-      writeComment(accessToken, boardIdx, parentIdx, comment)(dispatch);
+    setComment:(boardIdx, parentIdx, comment) => {
+      dispatch(writeComment(boardIdx, parentIdx, comment));
     },
     closeModal:() => {
       dispatch(closeModal());

@@ -5,14 +5,15 @@ import {fetchBoards, openModal, changePage} from "../actions/board";
 const mapStateToProps = (state) => {
   return {
     boards: state.board.boards,
-    profile: state.login.profile
+    profile: state.login.profile,
+    isLogin: state.login.isLogin
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getBoards:(accessToken, page) => {
-      fetchBoards(accessToken, page)(dispatch);
+    getBoards:(page) => {
+      dispatch(fetchBoards(page));
     },
     openModal:() => {
       dispatch(openModal());

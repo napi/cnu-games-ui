@@ -42,8 +42,7 @@ export default class CommentWrite extends Component {
   }
 
   _onSubmitBoard(event) {
-    let accessToken = window.localStorage.getItem("accessToken");
-    this.props.setComment(accessToken, this.props.boardIdx, this.props.parentIdx, this.state.comment);
+    this.props.setComment(this.props.boardIdx, this.props.parentIdx, this.state.comment);
     this.setState({'comment': ''})
     event.preventDefault();
   }

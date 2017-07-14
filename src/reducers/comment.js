@@ -1,4 +1,4 @@
-import {RECEIVE_COMMENTS, OPEN_COMMENT_MODAL, CLOSE_COMMENT_MODAL} from "../actions/comment";
+import {REQUEST_COMMENTS, RECEIVE_COMMENTS, OPEN_COMMENT_MODAL, CLOSE_COMMENT_MODAL} from "../actions/comment";
 
 export default function login(state = {
   comments: [],
@@ -6,6 +6,13 @@ export default function login(state = {
   showModal: false
 }, action) {
   switch(action.type) {
+  case REQUEST_COMMENTS : {
+    let nextState = Object.assign({}, state);
+
+    nextState.showModal = false;
+    nextState.comments = [];
+    return nextState;
+  }
   case RECEIVE_COMMENTS : {
     let nextState = Object.assign({}, state);
 

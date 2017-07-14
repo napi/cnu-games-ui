@@ -1,8 +1,10 @@
 import {connect} from "react-redux";
 import Home from "../components/home/Home";
 
-const mapStateToProps = () => {
-  return {}
+const mapStateToProps = (state) => {
+  return {
+    accessToken: state.login.accessToken
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {

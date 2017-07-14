@@ -42,8 +42,9 @@ export function closeModal() {
   };
 }
 
-export function fetchComments(accessToken, boardIdx) {
-  return (dispatch) => {
+export function fetchComments(boardIdx) {
+  return (dispatch, getState) => {
+    let accessToken = getState().login.accessToken;
     dispatch(requestComments(accessToken));
     let uri = `${API_BASE_URL}/api/comment/board/${boardIdx}`;
     return fetch(uri, {
@@ -54,11 +55,11 @@ export function fetchComments(accessToken, boardIdx) {
       })
       .then(response => response.json())
       .then(json => dispatch(receiveComments(json)))
-      .catch(error => console.log(error));
+      .catch(error => console.log(error))
   }
 }
 
-export function writeComment(accessToken, boardIdx, parentIdx, comment) {
+export function writeComment(boardIdx, parentIdx, comment) {
   // if (idx) {
   //   // Update
   //   return (dispatch) => {
@@ -81,7 +82,8 @@ export function writeComment(accessToken, boardIdx, parentIdx, comment) {
   //   }
   // } else {
     // Insert
-    return (dispatch) => {
+    return (dispatch, getState) => {
+      let accessToken = getState().login.accessToken;      
       let uri = `${API_BASE_URL}/api/comment`;
       return fetch(uri, {
           method: "POST",
@@ -99,15 +101,16 @@ export function writeComment(accessToken, boardIdx, parentIdx, comment) {
         .then(response => {
           alert('등록되었습니다.');
           dispatch(closeModal());
-          dispatch(fetchComments(accessToken, boardIdx));
+          dispatch(fetchComments(boardIdx));
         })
         .catch(error => console.log(error));
     }
   // }
 }
 
-export function deleteComment(accessToken, idx) {
-  return (dispatch) => {
+export function deleteComment(idx) {  
+  return (dispatch, getState) => {
+    let accessToken = getState().login.accessToken;    
     let uri = `${API_BASE_URL}/api/comment/${idx}`;
     return fetch(uri, {
         method: "DELETE",
@@ -118,7 +121,7 @@ export function deleteComment(accessToken, idx) {
       .then(response => {
         alert('삭제되었습니다.');
         dispatch(closeModal());
-        dispatch(fetchComments(accessToken, boardIdx));
+        dispatch(fetchComments(boardIdx));
       })
       .catch(error => console.log(error));
   }

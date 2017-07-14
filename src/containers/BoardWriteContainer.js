@@ -10,8 +10,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setBoard:(accessToken, title, contents, idx) => {
-      writeBoard(accessToken, title, contents, idx)(dispatch);
+    setBoard:(title, contents, idx) => {
+      dispatch(writeBoard(title, contents, idx));
     },
     closeModal:() => {
       dispatch(closeModal());

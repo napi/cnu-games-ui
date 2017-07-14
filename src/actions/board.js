@@ -57,8 +57,9 @@ export function closeModal() {
   };
 }
 
-export function fetchBoards(accessToken, page) {
-  return (dispatch) => {
+export function fetchBoards(page) {
+  return (dispatch, getState) => {
+    let accessToken = getState().login.accessToken;
     dispatch(requestBoards(accessToken));
     let uri = `${API_BASE_URL}/api/board?page=${page}`;
     return fetch(uri, {
@@ -73,8 +74,9 @@ export function fetchBoards(accessToken, page) {
   }
 }
 
-export function fetchBoard(accessToken, idx) {
-  return (dispatch) => {
+export function fetchBoard(idx) {
+  return (dispatch, getState) => {
+    let accessToken = getState().login.accessToken;
     dispatch(requestBoard(accessToken));
     let uri = `${API_BASE_URL}/api/board/${idx}`;
     return fetch(uri, {
@@ -89,10 +91,11 @@ export function fetchBoard(accessToken, idx) {
   }
 }
 
-export function writeBoard(accessToken, title, contents, idx) {
+export function writeBoard(title, contents, idx) {  
   if (idx) {
     // Update
-    return (dispatch) => {
+    return (dispatch, getState) => {
+      let accessToken = getState().login.accessToken;
       let uri = `${API_BASE_URL}/api/board/${idx}`;
       return fetch(uri, {
           method: "PUT",
@@ -113,7 +116,8 @@ export function writeBoard(accessToken, title, contents, idx) {
     }
   } else {
     // Insert
-    return (dispatch) => {
+    return (dispatch, getState) => {
+      let accessToken = getState().login.accessToken;
       let uri = `${API_BASE_URL}/api/board`;
       return fetch(uri, {
           method: "POST",
@@ -129,7 +133,7 @@ export function writeBoard(accessToken, title, contents, idx) {
         // .then(response => dispatch(closeBoardModal()))
         .then(response => {
           alert('등록되었습니다.');
-          dispatch(fetchBoards(accessToken))
+          dispatch(fetchBoards(1))
         })
         .catch(error => console.log(error));
     }
@@ -137,7 +141,8 @@ export function writeBoard(accessToken, title, contents, idx) {
 }
 
 export function deleteBoard(accessToken, idx) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    let accessToken = getState().login.accessToken;
     let uri = `${API_BASE_URL}/api/board/${idx}`;
     return fetch(uri, {
         method: "DELETE",
