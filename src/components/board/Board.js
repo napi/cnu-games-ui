@@ -49,8 +49,8 @@ export default class Board extends Component {
     }
 
     return (
-      <div id="boards">
-        <table width="80%">
+      <div className="board-root">
+        <table className="board-table">
           <colgroup>
             <col width="60px" />
             <col width="" />
@@ -74,8 +74,8 @@ export default class Board extends Component {
         <div>
           {this._renderPaging(boards)}
         </div>
-        <div>
-          <button onClick={this.handleOpenModal}>글쓰기</button>
+        <div className="board-bottom">
+          <button className="board-write-btn" onClick={this.handleOpenModal}>글쓰기</button>
         </div>
         <BoardWriteContainer title="" contents="" />
       </div>
@@ -112,18 +112,20 @@ export default class Board extends Component {
 
     var pages = [];
     if (startIdx != 1) {
-      pages.push(<span key="first" onClick={this._onClickPage.bind(this, 1)}>&#60;&#60;</span>);
+      pages.push(<li key="first" onClick={this._onClickPage.bind(this, 1)}>&#60;&#60;</li>);
     }
     for (var i = startIdx ; i <= lastIdx ; i++) {
-      pages.push(<span key={i} onClick={this._onClickPage.bind(this, i)}>{i}</span>);
+      pages.push(<li key={i} onClick={this._onClickPage.bind(this, i)}>{i}</li>);
     }
     if (lastIdx != board.totalPages) {
-      pages.push(<span key="last" onClick={this._onClickPage.bind(this, board.totalPages)}>&#62;&#62;</span>); 
+      pages.push(<li key="last" onClick={this._onClickPage.bind(this, board.totalPages)}>&#62;&#62;</li>); 
     }
 
     return (
-      <div>
-        {pages}
+      <div className="board-paging">
+        <ul>
+          {pages}
+        </ul>        
       </div>
     );
   }
