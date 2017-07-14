@@ -1,39 +1,51 @@
-#boards {
-  table {
-    width: 80%;
-    border-collapse: collapse;
-    border: 1px solid black;
-    vertical-align: center;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    -webkit-border-horizontal-spacing: 0px;
-    -webkit-border-vertical-spacing: 0px;
-    -webkit-margin-start: auto;
-    -webkit-margin-end: auto;
-  }
+$border:#CDCDCD;
 
-  th, td {
-    border: 1px solid black;
-  }      
+.board-root {
+  width: 80%;
+  margin: 0 auto;
 }
 
-#board {
-  .board-header {
-    position: relative;
-    border-top: 1px solid #ccc;
-    background: #f6f6f6;
-    overflow: hidden;  
-  }
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid $border;
+  vertical-align: center;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+  -webkit-border-horizontal-spacing: 0px;
+  -webkit-border-vertical-spacing: 0px;
+  -webkit-margin-start: auto;
+  -webkit-margin-end: auto;
 
-  .board-body {
-    border-top: 1px solid #ccc;
-    padding: 15px;
-    background: #fff;
+  th, td {
+    font-size: 12px;
+    padding: 5px;
+    border: 1px solid $border;
   }
-
-  .board-footer {
-
+  th {
+    background: #EFEFEF
   }
+}
+
+.board-paging {
+  ul {
+    list-style: none;
+    text-align: center;
+  }
+  li {
+    display: inline-block;
+  }
+}
+
+.board-bottom {
+  text-align: right;
+}
+
+.board-write-btn {
+  padding: 5px 10px;
+  border-radius: 3px;
+  background: #FFFFFF;
+  border: 1px solid $border;
 }
