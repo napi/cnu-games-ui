@@ -1,17 +1,17 @@
 import {connect} from "react-redux";
 import Login from "../components/login/Login";
-import {fetchProfile} from "../actions/login";
+import {fetchLogin} from "../actions/login";
 
 const mapStateToProps = (state) => {
   return {
-    profile: state.login.profile,
+    profile: state.login.profile
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProfile:(accessToken) => {
-      fetchProfile(accessToken)(dispatch);
+    login:(accessToken) => {
+      fetchLogin(accessToken)(dispatch);
     }
   }
 }

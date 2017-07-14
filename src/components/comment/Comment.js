@@ -9,7 +9,8 @@ export default class Comment extends Component {
     boardIdx: PropTypes.number.isRequired,
     comments: PropTypes.array.isRequired,
     openModal:PropTypes.func.isRequired,    
-    getComments:PropTypes.func.isRequired
+    getComments:PropTypes.func.isRequired,
+    isLogin:PropTypes.bool.isRequired
   }
 
   constructor(props) {
@@ -19,18 +20,22 @@ export default class Comment extends Component {
   handleOpenModal (parentIdx) {
     this.props.openModal(parentIdx);
   }
-  
-  componentDidMount() {
-    let accessToken = window.localStorage.getItem("accessToken");
-    this.props.getComments(accessToken, this.props.boardIdx);
+
+  componentWillReceiveProps(nextProp) {
+    if (!this.props.isLogin
+      && nextProp.isLogin) {
+      this.props.getComments(this.props.boardIdx);
+    }
+  }
+
+  componentWillMount() {
+    if (this.props.isLogin) {
+      this.props.getComments(this.props.boardIdx);  
+    }
   }
 
   render() {
     let comments = this.props.comments;
-    if (!comments) {
-      return null;
-    }
-
     return (
       <div id="comments">
         <ul>

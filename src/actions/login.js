@@ -3,39 +3,43 @@ import fetch from "isomorphic-fetch";
 /*
  * action types
  */
-export const REQUEST_PROFILE = 'REQUEST_PROFILE';
-export const RECEIVE_PROFILE = 'RECEIVE_PROFILE';
+export const REQUEST_LOGIN = 'REQUEST_LOGIN';
+export const RECEIVE_LOGIN = 'RECEIVE_LOGIN';
+
 /*
  * action creators
  */
-
-export function requestProfile(accessToken) {
-  console.log('requestProfile');
+export function requestLogin(accessToken) {
   return {
-    type: REQUEST_PROFILE,
-    accessToken
+    type: REQUEST_LOGIN,
+    data: accessToken
   };
 }
 
-export function receiveProfile(json) {
-  return {
-    type: RECEIVE_PROFILE,
-    data: json
-  };
+/*
+ * action creators
+ */
+export function receiveLogin(json) {
+  if (json && json.userId) {
+    return {
+      type: RECEIVE_LOGIN,
+      data: json
+    }    
+  }
 }
 
-export function fetchProfile(accessToken) {
+export function fetchLogin(accessToken) {
   return (dispatch) => {
-    dispatch(requestProfile(accessToken));
-    let uri = `${API_BASE_URL}/api/user`;
+    dispatch(requestLogin(accessToken));
+    let formData = new FormData()
+    formData.append('token', accessToken);
+    let uri = `${API_BASE_URL}/api/login`;
     return fetch(uri, {
-        method: "GET",
-        headers: {
-          "token": accessToken
-        }
+        method: "POST",
+        body: formData
       })
       .then(response => response.json())
-      .then(json => dispatch(receiveProfile(json)))
+      .then(json => dispatch(receiveLogin(json)))
       .catch(error => console.log(error));
-  }
+    }
 }

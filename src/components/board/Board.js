@@ -8,7 +8,8 @@ export default class Board extends Component {
   static propTypes = {
     boards: PropTypes.object.isRequired,
     openModal:PropTypes.func.isRequired,    
-    getBoards:PropTypes.func.isRequired    
+    getBoards:PropTypes.func.isRequired,
+    isLogin:PropTypes.bool.isRequired
   }
 
   constructor(props) {
@@ -19,17 +20,29 @@ export default class Board extends Component {
   handleOpenModal () {
     this.props.openModal();
   }
+
+  _fetchBoards() {
+      let page = 1;
+      if (this.props.location.query.page) {
+        page = this.props.location.query.page;
+      }             
+      this.props.getBoards(page);    
+  }
   
-  componentDidMount() {
-    let accessToken = window.localStorage.getItem("accessToken");
-    let page = 1;
-    if (this.props.location.query.page) {
-      page = this.props.location.query.page;
-    }             
-    this.props.getBoards(accessToken, page);
+  componentWillReceiveProps(nextProp) {
+    if (!this.props.isLogin
+      && nextProp.isLogin) {
+      this._fetchBoards();
+    }
   }
 
-  render() {    
+  componentDidMount() { 
+    if (this.props.isLogin) {
+      this._fetchBoards();
+    }
+  }
+
+  render() {
     let boards = this.props.boards;
     if (!boards) {
       return null;
@@ -83,7 +96,7 @@ export default class Board extends Component {
     return (
       <tr key={board.idx} onClick={this._onClickBoard.bind(this, board.idx)}>
         <td>{board.idx}</td>
-        <td>{board.title}</td>
+        <td>{board.title} {board.commentCount != 0 && `[${board.commentCount}]`}</td>
         <td>{board.cnuUser.name}</td>
         <td></td>
         <td></td>

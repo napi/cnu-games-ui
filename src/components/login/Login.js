@@ -4,7 +4,7 @@ import {PropTypes} from "prop-types";
 export default class Login extends Component {
   static propTypes = {
     profile: PropTypes.object.isRequired,
-    getProfile: PropTypes.func.isRequired
+    login: PropTypes.func.isRequired
   }
 
   componentDidMount() {    
@@ -32,7 +32,7 @@ export default class Login extends Component {
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
       window.localStorage.setItem("accessToken", response.authResponse.accessToken);
-      this.props.getProfile(response.authResponse.accessToken);
+      this.props.login(response.authResponse.accessToken);
     } else {
       // The person is not logged into your app or we are unable to tell.
       console.log("Need to login!!");

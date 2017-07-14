@@ -1,10 +1,16 @@
-import {CHANGE_PAGE, RECEIVE_BOARDS, OPEN_MODAL, CLOSE_MODAL} from "../actions/board";
+import {CHANGE_PAGE, REQUEST_BOARDS, RECEIVE_BOARDS, OPEN_MODAL, CLOSE_MODAL} from "../actions/board";
 
 export default function login(state = {
   boards: {},
   showModal: false
 }, action) {
   switch(action.type) {
+  case REQUEST_BOARDS : {
+    let nextState = Object.assign({}, state);
+    nextState.boards = {};
+
+    return nextState;
+  }
   case RECEIVE_BOARDS : {
     let nextState = Object.assign({}, state);
 

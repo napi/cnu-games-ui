@@ -20,7 +20,7 @@ export default class BoardWrite extends Component {
     contents: PropTypes.string.isRequired,
     setBoard: PropTypes.func.isRequired,
     showModal:PropTypes.bool.isRequired,
-    closeModal:PropTypes.func.isRequired    
+    closeModal:PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -51,8 +51,7 @@ export default class BoardWrite extends Component {
   }
 
   _onSubmitBoard(event) {
-    let accessToken = window.localStorage.getItem("accessToken");        
-    this.props.setBoard(accessToken, this.state.title, this.state.contents, this.props.idx);
+    this.props.setBoard(this.state.title, this.state.contents, this.props.idx);
     event.preventDefault();
   }
 

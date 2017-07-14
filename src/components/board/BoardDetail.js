@@ -22,6 +22,7 @@ export default class Board extends Component {
     board: PropTypes.object.isRequired,
     getBoard: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired,
+    isLogin: PropTypes.bool.isRequired,
     openModal:PropTypes.func.isRequired,    
     deleteBoard:PropTypes.func.isRequired
   }
@@ -33,10 +34,18 @@ export default class Board extends Component {
     this.handleDelete = this.handleDelete.bind(this);
   }
 
-  componentDidMount() {
-    let accessToken = window.localStorage.getItem("accessToken");
-    this.props.getBoard(accessToken, this.props.params.idx);
-  }  
+  componentWillReceiveProps(nextProp) {    
+    if (!this.props.isLogin
+      && nextProp.isLogin) {      
+      this.props.getBoard(this.props.params.idx);
+    }
+  }
+
+  componentDidMount() {    
+    if (this.props.isLogin) {
+      this.props.getBoard(this.props.params.idx);
+    }
+  }
 
   _onClickList() {
     browserHistory.push(`/board`);
@@ -48,14 +57,13 @@ export default class Board extends Component {
 
   handleDelete(idx) {
     if (confirm('정말로 삭제하시겠습니까?')) {
-      let accessToken = window.localStorage.getItem("accessToken");
-      this.props.deleteBoard(accessToken, idx);
+      this.props.deleteBoard(idx);
     }    
   }
 
   render() {
     let board = this.props.board;
-    if (!board || !board.idx) {
+    if (!board || !board.idx || board.idx != this.props.params.idx) {
       return null;
     }
 
